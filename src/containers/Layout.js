@@ -14,7 +14,7 @@ const Layout = (props) => {
                     <Nav.Link>Shifts</Nav.Link>
                 </LinkContainer>
                 <Nav className="ml-auto">
-                    {props.currentUser ? <LinkContainer to="/"><Nav.Link onClick={event => props.logout(event)}>Logout</Nav.Link></LinkContainer> : null}
+                    {props.currentUser ? <LinkContainer to="/"><Nav.Link>Logout</Nav.Link></LinkContainer> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>}
                 </Nav>
             </Navbar>
             {props.children}
