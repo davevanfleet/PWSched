@@ -17,14 +17,12 @@ export function login(credentials, history) {
                 return response.json()
             })
             .then(json => {
-                const user = JSON.parse(json.user)
+                const user = json.user
                 dispatch({type: 'ASSIGN_CURRENT_USER', user: user})
                 history.push(`/`)
             })
             .catch(error => {
-                error.json().then(data => {
-                    dispatch({type: 'ADD_ERROR', errorMessage: data.error})
-                })
+                console.log(error)
                 history.push('/login')
             })
     };
