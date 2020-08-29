@@ -7,6 +7,7 @@ import { BrowserRouter as Router,
 import Layout from './containers/Layout';
 import Home from './components/Home';
 import Shifts from './components/Shifts'
+import LoginForm from './components/LoginForm';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route exact path="/shifts">
               <Shifts />
+            </Route>
+            <Route exact path="/login">
+              <LoginForm />
             </Route>
           </Switch>
         </Layout>
