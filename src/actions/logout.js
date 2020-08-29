@@ -9,8 +9,8 @@ export function logout(history){
                 "Content-Type": "application/json",
                 "Accepts": 'application/json'
             },
-            body: JSON.stringify('')
-        }
+            body: JSON.stringify({})
+        };
         fetch(`${config.url.API_URL}/logout`, configObject)
             .then(r => r.json())
             .then(d => dispatch({ type: "LOGOUT"}))

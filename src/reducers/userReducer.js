@@ -1,4 +1,4 @@
-export function userReducer(state={}, action){
+export function userReducer(state=null, action){
 
     switch(action.type){
         case 'ASSIGN_CURRENT_USER':
@@ -6,7 +6,7 @@ export function userReducer(state={}, action){
                 ...action.user,
             }
         case 'LOGOUT':
-            return {}
+            return null
         default:
             return state
     }
