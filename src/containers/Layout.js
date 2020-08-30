@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/logout';
+import { getCurrentUser } from '../actions/getCurrentUser';
 
 const Layout = (props) => {
+    useEffect(() => {
+        props.getCurrentUser()
+    }, [props.getCurrentUser])
+
     const handleLogout = (e) => {
         e.preventDefault()
         props.logout(props.history)
@@ -38,7 +43,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: (history) => {dispatch(logout(history))}
+        logout: (history) => dispatch(logout(history)),
+        getCurrentUser: () => dispatch(getCurrentUser())
     }
 }
 
