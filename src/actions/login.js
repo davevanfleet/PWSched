@@ -9,7 +9,8 @@ export function login(credentials, history) {
                 "Content-Type": "application/json",
                 "Accepts": 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: JSON.stringify(credentials),
+            credentials: 'include'
         }
         fetch(`${config.url.API_URL}/login`, configObject)
             .then(response => {
