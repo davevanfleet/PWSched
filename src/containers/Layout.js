@@ -5,11 +5,13 @@ import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/logout';
 import { getCurrentUser } from '../actions/getCurrentUser';
+import { fetchCongregations } from '../actions/fetchCongregations'
 
 const Layout = (props) => {
     useEffect(() => {
         props.getCurrentUser()
-    }, [props.getCurrentUser])
+        props.fetchCongregations()
+    }, [props.getCurrentUser, props.fetchCongregations])
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -44,7 +46,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: (history) => dispatch(logout(history)),
-        getCurrentUser: () => dispatch(getCurrentUser())
+        getCurrentUser: () => dispatch(getCurrentUser()),
+        fetchCongregations: () => dispatch(fetchCongregations())
     }
 }
 

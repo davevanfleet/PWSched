@@ -1,6 +1,6 @@
 import { config } from '../constants';
 
-export function getCurrentUser(token) {
+export function getCurrentUser() {
     return (dispatch) => {
         dispatch({ type: 'START_GETTING_CURRENT_USER' });
         const configObject = {
