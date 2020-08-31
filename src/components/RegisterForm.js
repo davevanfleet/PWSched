@@ -1,9 +1,6 @@
-import React, { useState } from 'react'; 
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { login } from '../actions/login';
+import React, { useState } from 'react';
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
     const [ email, setEmail ] = useState('')
     const handleEmailChange = (e) => {
         setEmail(e.target.value)
@@ -14,17 +11,20 @@ const LoginForm = (props) => {
         setPassword(e.target.value)
     }
 
-    const handleLogin = (e) => {
+    const [ passwordConfirm, setPasswordConfirm ] = useState('')
+    const handlePasswordConfirmChange = (e) => {
+        setPasswordConfirm(e.target.value)
+    }
+
+    const handleRegister = (e) => {
         e.preventDefault()
-        console.log('logging in')
-        props.login({"email": email,
-                     "password": password}, props.history)
+        console.log("registering...")
     }
 
     return (
         <>
-            <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+            <h1>Sign Up</h1>
+            <form onSubmit={handleRegister}>
                 <p><label htmlFor="email">Email: </label><input type="text" 
                                                                 name="email" 
                                                                 value={email} 
@@ -33,16 +33,14 @@ const LoginForm = (props) => {
                                                                       name="password"
                                                                       value={password} 
                                                                       onChange={handlePasswordChange} /></p>
+                <p><label htmlFor="passwordConfirm">Confirm Password: </label><input type="password" 
+                                                                             name="password"
+                                                                             value={passwordConfirm} 
+                                                                             onChange={handlePasswordConfirmChange} /></p>
                 <input type="submit" value="Login" />
             </form>
         </>
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: (credentials, history) => dispatch(login(credentials, history))
-    }
-}
-
-export default withRouter(connect(null, mapDispatchToProps)(LoginForm));
+export default RegisterForm;

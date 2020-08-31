@@ -5,7 +5,8 @@ import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/logout';
 import { getCurrentUser } from '../actions/getCurrentUser';
-import { fetchCongregations } from '../actions/fetchCongregations'
+import { fetchCongregations } from '../actions/fetchCongregations';
+import AuthMenu from '../components/AuthMenu';
 
 const Layout = (props) => {
     useEffect(() => {
@@ -27,9 +28,7 @@ const Layout = (props) => {
                 <LinkContainer to="/shifts">
                     <Nav.Link>Shifts</Nav.Link>
                 </LinkContainer>
-                <Nav className="ml-auto">
-                    {props.currentUser ? <LinkContainer to="/" onClick={handleLogout}><Nav.Link>Logout</Nav.Link></LinkContainer> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>}
-                </Nav>
+                <AuthMenu />
             </Navbar>
             {props.children}
         </div>

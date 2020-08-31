@@ -8,6 +8,7 @@ import Layout from './containers/Layout';
 import Home from './components/Home';
 import Shifts from './components/Shifts'
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route exact path="/shifts">
               <Shifts />
+            </Route>
+            <Route exact path="/register">
+              <RegisterForm />
             </Route>
             <Route exact path="/login">
               <LoginForm />
