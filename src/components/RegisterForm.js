@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { register } from '../actions/register';
 
 const RegisterForm = (props) => {
     const [ email, setEmail ] = useState('')
@@ -19,7 +21,15 @@ const RegisterForm = (props) => {
     const handleRegister = (e) => {
         e.preventDefault()
         console.log("registering...")
+        const credentials = {
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm
+        }
+        props.register(credentials)
     }
+
+    // const congregationSelect = props.congregations.map(cong => )
 
     return (
         <>
@@ -43,4 +53,16 @@ const RegisterForm = (props) => {
     )
 }
 
-export default RegisterForm;
+const mapStateToProps = (state) => {
+    return {
+        congregations: state.congregations
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        register: (credentials) => dispatch(register(credentials))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

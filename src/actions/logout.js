@@ -1,6 +1,6 @@
 import { config } from '../constants';
 
-export function logout(history){
+export function logout(){
     return (dispatch) => {
         dispatch({ type: 'START_LOGGING_OUT' });
         const configObject = {
