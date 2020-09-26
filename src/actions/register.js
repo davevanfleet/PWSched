@@ -3,7 +3,6 @@ import { config } from '../constants';
 export function register(credentials) {
     return (dispatch) => {
         dispatch({type: "REGISTERING"})
-        debugger
         const configObj = {
             method: "POST",
             headers: {

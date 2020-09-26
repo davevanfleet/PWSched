@@ -18,18 +18,24 @@ const RegisterForm = (props) => {
         setPasswordConfirm(e.target.value)
     }
 
+    const [ congregation, setCongregation ] = useState('')
+    const handleCongregationChange = (e) => {
+        setCongregation(e.target.value)
+    }
+
     const handleRegister = (e) => {
         e.preventDefault()
         console.log("registering...")
         const credentials = {
             email: email,
             password: password,
-            passwordConfirm: passwordConfirm
+            passwordConfirm: passwordConfirm,
+            congregation: congregation
         }
         props.register(credentials)
     }
 
-    // const congregationSelect = props.congregations.map(cong => )
+    const congregationOptions = props.congregations.map(cong => <option value={`${cong.name}`}>{cong.name}</option>)
 
     return (
         <>
@@ -47,6 +53,12 @@ const RegisterForm = (props) => {
                                                                              name="password"
                                                                              value={passwordConfirm} 
                                                                              onChange={handlePasswordConfirmChange} /></p>
+                <p><label htmlFor="congregation">Congregation: </label><select name="congregation"
+                                                                               value={congregation}
+                                                                               onChange={handleCongregationChange}>
+                                                                            <option value=''>Select a Congregation</option>
+                                                                            { congregationOptions }
+                                                                       </select></p>
                 <input type="submit" value="Login" />
             </form>
         </>
