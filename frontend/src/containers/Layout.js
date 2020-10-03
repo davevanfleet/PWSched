@@ -14,20 +14,15 @@ const Layout = (props) => {
         props.fetchCongregations()
     }, [props.getCurrentUser, props.fetchCongregations])
 
-    const handleLogout = (e) => {
-        e.preventDefault()
-        props.logout(props.history)
-    }
-
     return(
         <div className="layout">
             <Navbar collapseOnSelect expand="md" bg="light">
                 <LinkContainer to="/">
                     <Navbar.Brand>Home</Navbar.Brand>
                 </LinkContainer>
-                <LinkContainer to="/shifts">
-                    <Nav.Link>Shifts</Nav.Link>
-                </LinkContainer>
+                {props.currentUser ? <LinkContainer to="/shifts">
+                                        <Nav.Link>Shifts</Nav.Link>
+                                     </LinkContainer> : null}
                 <AuthMenu />
             </Navbar>
             {props.children}

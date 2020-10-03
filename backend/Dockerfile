@@ -2,7 +2,7 @@
 FROM python:3.8
 
 # set working directory
-WORKDIR /app
+WORKDIR /backend
 
 # install app dependencies
 COPY requirements.txt ./
