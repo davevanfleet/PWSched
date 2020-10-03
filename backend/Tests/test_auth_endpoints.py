@@ -34,6 +34,6 @@ def test_get_current_user(app, client, monkeypatch):
         assert response.status_code == 401
         user = User.objects(email='fake@fakemail.com').first()
         token = user.get_auth_token()
-        client.set_cookie('localhost', 'auth', token)
+        client.set_cookie('localhost', 'user-auth', token)
         response = client.post('/get_current_user')
         assert response.status_code == 200
