@@ -38,4 +38,8 @@ Or you can view the static swagger docs at `./static/json`
 
 ## Contributing
 
+<<<<<<< HEAD
 Contributions are always welcome.  Please check for any open issues when submitting PRs.  If you find a bug or have a feature request please submit it as a new issue. Pleas
+=======
+Contributions are always welcome.  Please check for any open issues when submitting PRs.  If you find a bug or have a feature request please submit it as a new issue. Please also include tests an documentation as appropriate.
+>>>>>>> old_backend/master
