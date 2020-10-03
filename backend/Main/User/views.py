@@ -72,7 +72,7 @@ def get_current_user():
         user = User.objects(email=email).first()
         if user:
             login_user(user)
-            return jsonify({"user": user), 200
+            return jsonify({"user": user}), 200
         else:
             return jsonify({"message": "unable to find user"}), 401
     except Exception:
