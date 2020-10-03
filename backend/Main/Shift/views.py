@@ -52,6 +52,7 @@ def create_shift(cong_id):
         datetime=body["datetime"],
         congregation=congregation.to_dbref()
     )
+    shift.save()
     congregation.shifts.append(shift)
     congregation.save()
     return jsonify(shift), 200
