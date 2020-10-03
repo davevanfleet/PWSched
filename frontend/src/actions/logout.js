@@ -1,6 +1,6 @@
 import { config } from '../constants';
 
-export function logout(){
+export function logout(history){
     return (dispatch) => {
         dispatch({ type: 'START_LOGGING_OUT' });
         const configObject = {
@@ -15,5 +15,6 @@ export function logout(){
         fetch(`${config.url.API_URL}/logout`, configObject)
             .then(r => r.json())
             .then(d => dispatch({ type: "LOGOUT"}))
+            history.push('/')
     }
 }

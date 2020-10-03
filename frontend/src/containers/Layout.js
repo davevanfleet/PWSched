@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
-import { logout } from '../actions/logout';
 import { getCurrentUser } from '../actions/getCurrentUser';
 import { fetchCongregations } from '../actions/fetchCongregations';
 import AuthMenu from '../components/AuthMenu';
@@ -39,7 +38,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: (history) => dispatch(logout(history)),
         getCurrentUser: () => dispatch(getCurrentUser()),
         fetchCongregations: () => dispatch(fetchCongregations())
     }
