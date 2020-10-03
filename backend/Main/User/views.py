@@ -67,7 +67,7 @@ def logout():
 @sessions_blueprint.route('/get_current_user', methods=['POST'])
 def get_current_user():
     try:
-        token = request.cookies["auth"]
+        token = request.cookies["user-auth"]
         email = jwt.decode(token, os.environ.get("SECRET_KEY"))['email']
         user = User.objects(email=email).first()
         if user:
