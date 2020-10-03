@@ -4,7 +4,6 @@ const Home = (props) => {
     return (
         <>
             <h1>Public Witnessing Scheduler</h1>
-            <h2>DID IT WORRKKK???</h2>
             <p>Welcome to PWSched! This app is designed to make scheduling public witnessing activities
                 easy for service overseers and volunteers. Shifts are assigned in three easy steps:
             </p>
