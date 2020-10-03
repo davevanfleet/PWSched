@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router,
-  Switch,
+  Switch, Redirect,
   Route } from 'react-router-dom';
 import Layout from './containers/Layout';
 import Home from './components/Home';
@@ -10,7 +11,7 @@ import Shifts from './components/Shifts'
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       <Router>
@@ -20,13 +21,13 @@ function App() {
               <Home />
             </Route>
             <Route exact path="/shifts">
-              <Shifts />
+              {props.currentUser ? <Shifts /> : <Redirect to='/' />}
             </Route>
             <Route exact path="/register">
-              <RegisterForm />
+              {!props.currentUser ? <RegisterForm /> : <Redirect to='/' />}
             </Route>
             <Route exact path="/login">
-              <LoginForm />
+              {!props.currentUser ? <LoginForm /> : <Redirect to='/' />}
             </Route>
           </Switch>
         </Layout>
@@ -35,4 +36,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
