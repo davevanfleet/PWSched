@@ -3,7 +3,7 @@ from mongoengine import StringField, DateTimeField, ListField, \
     ReferenceField, EmbeddedDocument
 
 
-class Shift(EmbeddedDocument):
+class Shift(Document):
     location = StringField(required=True)
     datetime = StringField(required=True)
     congregation = ReferenceField("Congregation")

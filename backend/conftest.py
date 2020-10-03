@@ -51,7 +51,7 @@ def app():
 
     congregation = Congregation(name="English - Willimantic").save()
     shift = Shift(location="UConn",
-                  datetime=datetime.now,
+                  datetime="2021-01-01T14:30:00",
                   congregation=congregation.to_dbref()).save()
     congregation.shifts.append(shift.to_dbref())
     congregation.save()
