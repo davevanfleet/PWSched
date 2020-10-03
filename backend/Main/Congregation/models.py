@@ -7,4 +7,4 @@ from Main.Shift.models import Shift
 class Congregation(Document):
     name = StringField(required=True)
     volunteers = ListField(ReferenceField("User"), default=[])
-    shifts = EmbeddedDocumentListField(Shift, default=[])
+    shifts = ListField(ReferenceField("Shift"), default=[])

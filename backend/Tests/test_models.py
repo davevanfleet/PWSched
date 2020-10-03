@@ -21,13 +21,13 @@ def test_create_congregation(client):
 
 def test_create_shift(client):
     shift = Shift(
-        location="UConn",
-        datetime=datetime.now
+        location="Dam Trail",
+        datetime="2021-01-01T14:30:00"
     )
-    assert shift.location == "UConn"
+    assert shift.location == "Dam Trail"
     shift.save()
     assert (Shift.objects().order_by('-id').first()
-            .location == "UConn")
+            .location == "Dam Trail")
 
 
 def test_create_user(client):
