@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
-from .models import Shift
+from .models import Shift, ShiftSchema
 from Main.utils import *
 from IPython import embed
 
@@ -16,7 +16,8 @@ def get_shift(cong_id, id):
                          "shift does not belong to this congregation"}),
                 401)
     else:
-        return jsonify(shift), 200
+        shift_json = ShiftSchema().dumps(shift)
+        return shift_json, 200
 
 
 @shifts.route('/<id>', methods=['PUT'])
@@ -25,7 +26,8 @@ def update_shift(cong_id, id):
     body = request.get_json()
     Shift.objects().get(id=id).update(**body)
     shift = Shift.objects().get(id=id)
-    return jsonify(shift), 200
+    shift_json = ShiftSchema().dumps(shift)
+    return shift_json, 200
 
 
 @shifts.route('/<id>', methods=['DELETE'])
@@ -41,7 +43,8 @@ def delete_shift(cong_id, id):
 def get_shifts(cong_id):
     congregation = set_congregation(cong_id)
     shifts = Shift.objects(congregation=congregation)
-    return jsonify(shifts), 200
+    shift_json = ShiftSchema().dumps(shifts, many=True)
+    return shift_json, 200
 
 
 @shifts.route('/', methods=['POST'])
@@ -59,4 +62,5 @@ def create_shift(cong_id):
     shift.save()
     congregation.shifts.append(shift)
     congregation.save()
-    return jsonify(shift), 200
+    shift_json = ShiftSchema().dumps(shift)
+    return shift_json, 200
