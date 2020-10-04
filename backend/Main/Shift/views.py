@@ -16,7 +16,7 @@ def get_shift(cong_id, id):
                          "shift does not belong to this congregation"}),
                 401)
     else:
-        shift_json = ShiftSchema().dumps(shift)
+        shift_json = ShiftSchema().dump(shift)
         return shift_json, 200
 
 
@@ -26,7 +26,7 @@ def update_shift(cong_id, id):
     body = request.get_json()
     Shift.objects().get(id=id).update(**body)
     shift = Shift.objects().get(id=id)
-    shift_json = ShiftSchema().dumps(shift)
+    shift_json = ShiftSchema().dump(shift)
     return shift_json, 200
 
 
@@ -43,8 +43,8 @@ def delete_shift(cong_id, id):
 def get_shifts(cong_id):
     congregation = set_congregation(cong_id)
     shifts = Shift.objects(congregation=congregation)
-    shift_json = ShiftSchema().dumps(shifts, many=True)
-    return shift_json, 200
+    shift_json = ShiftSchema().dump(shifts, many=True)
+    return jsonify(shift_json), 200
 
 
 @shifts.route('/', methods=['POST'])
@@ -60,7 +60,5 @@ def create_shift(cong_id):
         congregation=congregation.to_dbref()
     )
     shift.save()
-    congregation.shifts.append(shift)
-    congregation.save()
-    shift_json = ShiftSchema().dumps(shift)
+    shift_json = ShiftSchema().dump(shift)
     return shift_json, 200

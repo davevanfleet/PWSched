@@ -18,7 +18,6 @@ def test_get_shifts(client):
 def test_post_shifts(client):
     congregation = Congregation.objects().first()
     cong_id = str(congregation.id)
-    assert len(congregation.shifts) == 1
     payload = {
         "location": "Dam trail",
         "date": "2017-06-01",
@@ -32,9 +31,6 @@ def test_post_shifts(client):
     shift = Shift.objects().order_by('-id').first()
     assert shift.location == "Dam trail"
     assert shift.congregation.name == "English - Willimantic"
-    congregation = Congregation.objects().first()
-    assert len(congregation.shifts) == 2
-    assert congregation.shifts[1].location == "Dam trail"
     # Check that response contains correct shift data
     data = response.get_json()
     assert data["location"] == "Dam trail"
@@ -72,11 +68,9 @@ def test_put_shift(client):
 def test_delete_shift(client):
     congregation = Congregation.objects().first()
     cong_id = str(congregation.id)
-    assert len(congregation.shifts) == 1
     shift = Shift.objects().first()
+    assert len(Shift.objects()) == 1
     shift_id = str(shift.id)
     response = client.delete(f'/congregations/{cong_id}/shifts/{shift_id}')
     assert response.status_code == 200
-    congregation = Congregation.objects().first()
-    assert len(congregation.shifts) == 0
     assert len(Shift.objects()) == 0
