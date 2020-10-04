@@ -9,7 +9,7 @@ def test_get_congregations(client):
     response = client.get('/congregations/')
     assert response.status_code == 200
     data = response.get_json()
-    assert data[0]['name'] == "English - Willimantic"
+    assert data[0] == "English - Willimantic"
 
 
 def test_post_congregations(client):
@@ -22,7 +22,7 @@ def test_post_congregations(client):
     response = client.get('/congregations/')
     data = response.get_json()
     assert len(data) == 2
-    assert data[1]["name"] == "Columbia"
+    assert data[1] == "Columbia"
 
 
 def test_get_congregation(client):
