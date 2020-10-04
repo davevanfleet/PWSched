@@ -39,7 +39,7 @@ def delete_shift(cong_id, id):
 @shifts.route('/', methods=['GET'])
 def get_shifts(cong_id):
     congregation = set_congregation(cong_id)
-    shifts = congregation.shifts
+    shifts = Shift.objects(congregation=congregation)
     return jsonify(shifts), 200
 
 
@@ -49,7 +49,9 @@ def create_shift(cong_id):
     body = request.get_json()
     shift = Shift(
         location=body["location"],
-        datetime=body["datetime"],
+        date=body["date"],
+        start_time=body["startTime"],
+        end_time=body["endTime"],
         congregation=congregation.to_dbref()
     )
     shift.save()

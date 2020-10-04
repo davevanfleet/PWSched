@@ -21,7 +21,9 @@ def test_post_shifts(client):
     assert len(congregation.shifts) == 1
     payload = {
         "location": "Dam trail",
-        "datetime": "2017-06-01T08:30"
+        "date": "2017-06-01",
+        "startTime": "14:00",
+        "endTime": "15:30"
     }
     response = client.post(f'/congregations/{cong_id}/shifts/',
                            json=payload)
