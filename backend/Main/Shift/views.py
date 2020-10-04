@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
-from .models import Shift
+from .models import Shift, ShiftSchema
 from Main.utils import *
+from IPython import embed
 
 shifts = Blueprint('shifts', __name__)
 
@@ -15,7 +16,8 @@ def get_shift(cong_id, id):
                          "shift does not belong to this congregation"}),
                 401)
     else:
-        return jsonify(shift), 200
+        shift_json = ShiftSchema().dump(shift)
+        return shift_json, 200
 
 
 @shifts.route('/<id>', methods=['PUT'])
@@ -24,7 +26,8 @@ def update_shift(cong_id, id):
     body = request.get_json()
     Shift.objects().get(id=id).update(**body)
     shift = Shift.objects().get(id=id)
-    return jsonify(shift), 200
+    shift_json = ShiftSchema().dump(shift)
+    return shift_json, 200
 
 
 @shifts.route('/<id>', methods=['DELETE'])
@@ -39,8 +42,9 @@ def delete_shift(cong_id, id):
 @shifts.route('/', methods=['GET'])
 def get_shifts(cong_id):
     congregation = set_congregation(cong_id)
-    shifts = congregation.shifts
-    return jsonify(shifts), 200
+    shifts = Shift.objects(congregation=congregation)
+    shift_json = ShiftSchema().dump(shifts, many=True)
+    return jsonify(shift_json), 200
 
 
 @shifts.route('/', methods=['POST'])
@@ -49,10 +53,12 @@ def create_shift(cong_id):
     body = request.get_json()
     shift = Shift(
         location=body["location"],
-        datetime=body["datetime"],
+        start_time=datetime.strptime(f'{body["date"]} {body["startTime"]}',
+                                     '%Y-%m-%d %H:%M'),
+        end_time=datetime.strptime(f'{body["date"]} {body["endTime"]}',
+                                   '%Y-%m-%d %H:%M'),
         congregation=congregation.to_dbref()
     )
     shift.save()
-    congregation.shifts.append(shift)
-    congregation.save()
-    return jsonify(shift), 200
+    shift_json = ShiftSchema().dump(shift)
+    return shift_json, 200

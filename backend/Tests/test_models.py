@@ -22,7 +22,8 @@ def test_create_congregation(client):
 def test_create_shift(client):
     shift = Shift(
         location="Dam Trail",
-        datetime="2021-01-01T14:30:00"
+        start_time=datetime(2021, 1, 1, 14, 0),
+        end_time=datetime(2021, 1, 1, 15, 30),
     )
     assert shift.location == "Dam Trail"
     shift.save()

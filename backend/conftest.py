@@ -51,10 +51,9 @@ def app():
 
     congregation = Congregation(name="English - Willimantic").save()
     shift = Shift(location="UConn",
-                  datetime="2021-01-01T14:30:00",
+                  start_time=datetime(2021, 1, 1, 14, 0),
+                  end_time=datetime(2021, 1, 1, 15, 30),
                   congregation=congregation.to_dbref()).save()
-    congregation.shifts.append(shift.to_dbref())
-    congregation.save()
     hashed_password = crypt.generate_password_hash('password').decode('utf-8')
     User(name="Brother Service Overseer",
          email="fake@fakemail.com",
