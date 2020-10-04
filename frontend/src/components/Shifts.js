@@ -11,7 +11,7 @@ const Shifts = (props) => {
 
     const shifts = props.shifts.map(shift => {
         return (
-            <tr>
+            <tr key={shift.id}>
                 <td>{new Date(shift.start_time).toDateString()}</td>
                 <td>{new Date(shift.start_time).toLocaleTimeString()}</td>
                 <td>{new Date(shift.end_time).toLocaleTimeString()}</td>
