@@ -55,6 +55,7 @@ class UserSchema(Schema):
     name = fields.Str()
     email = fields.Email()
     confirmed = fields.Boolean()
+    role = fields.Str()
     congregation = fields.Nested(CongregationSchema)
     shifts = fields.List(
         fields.Str()

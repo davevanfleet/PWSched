@@ -59,7 +59,7 @@ const Shifts = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        shifts: state.shifts,
+        shifts: state.currentUser.congregation.shifts,
         currentUser: state.currentUser
     }
 }
