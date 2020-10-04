@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { register } from '../actions/register';
 
 const RegisterForm = (props) => {
+    const [ name, setName ] = useState('')
+    const handleNameChange = (e) => {
+        setName(e.target.value)
+    }
+
     const [ email, setEmail ] = useState('')
     const handleEmailChange = (e) => {
         setEmail(e.target.value)
@@ -26,12 +31,7 @@ const RegisterForm = (props) => {
     const handleRegister = (e) => {
         e.preventDefault()
         console.log("registering...")
-        const credentials = {
-            email: email,
-            password: password,
-            passwordConfirm: passwordConfirm,
-            congregation: congregation
-        }
+        const credentials = { name, email, password, passwordConfirm, congregation}
         props.register(credentials)
     }
 
@@ -41,24 +41,28 @@ const RegisterForm = (props) => {
         <>
             <h1>Sign Up</h1>
             <form onSubmit={handleRegister}>
-                <p><label htmlFor="email">Email: </label><input type="text" 
+                <div><label htmlFor="name">Name: </label><input type="text" 
+                                                              name="name" 
+                                                              value={name} 
+                                                              onChange={handleNameChange} /></div>
+                <div><label htmlFor="email">Email: </label><input type="text" 
                                                                 name="email" 
                                                                 value={email} 
-                                                                onChange={handleEmailChange} /></p>
-                <p><label htmlFor="password">Password: </label><input type="password" 
+                                                                onChange={handleEmailChange} /></div>
+                <div><label htmlFor="password">Password: </label><input type="password" 
                                                                       name="password"
                                                                       value={password} 
-                                                                      onChange={handlePasswordChange} /></p>
-                <p><label htmlFor="passwordConfirm">Confirm Password: </label><input type="password" 
+                                                                      onChange={handlePasswordChange} /></div>
+                <div><label htmlFor="passwordConfirm">Confirm Password: </label><input type="password" 
                                                                              name="password"
                                                                              value={passwordConfirm} 
-                                                                             onChange={handlePasswordConfirmChange} /></p>
-                <p><label htmlFor="congregation">Congregation: </label><select name="congregation"
+                                                                             onChange={handlePasswordConfirmChange} /></div>
+                <div><label htmlFor="congregation">Congregation: </label><select name="congregation"
                                                                                value={congregation}
                                                                                onChange={handleCongregationChange}>
                                                                             <option value=''>Select a Congregation</option>
                                                                             { congregationOptions }
-                                                                       </select></p>
+                                                                       </select></div>
                 <input type="submit" value="Login" />
             </form>
         </>
