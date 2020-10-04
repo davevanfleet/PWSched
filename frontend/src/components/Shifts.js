@@ -1,12 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router'
 
 const Shifts = (props) => {
-    const shifts = props.currentCongregation.shifts.map(shift => {
-        const date = new Date(shift.datetime).toLocaleString()
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        props.history.push('/create_shift')
+    }
+
+    const shifts = props.shifts.map(shift => {
         return (
             <tr>
-                <td>{date}</td>
+                <td>{new Date(shift.start_time).toDateString()}</td>
+                <td>{new Date(shift.start_time).toLocaleTimeString()}</td>
+                <td>{new Date(shift.end_time).toLocaleTimeString()}</td>
                 <td>{shift.location}</td>
                 <td>{shift.volunteers[0]}</td>
                 <td>{shift.volunteers[1]}</td>
@@ -14,6 +22,7 @@ const Shifts = (props) => {
             </tr>
         )
     })
+
     return (
         <>
             <h1>Your Congregation's Shifts</h1>
@@ -21,6 +30,8 @@ const Shifts = (props) => {
                 <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
                         <th>Location</th>
                         <th>Volunteer 1</th>
                         <th>Volunteer 2</th>
@@ -31,14 +42,16 @@ const Shifts = (props) => {
                     {shifts}
                 </tbody>
             </table>
+            {props.currentUser.role === "admin" && <button className="btn btn-primary" onClick={handleClick}>Add New Shift</button>}
         </>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        currentCongregation: state.currentCongregation
+        shifts: state.shifts,
+        currentUser: state.currentUser
     }
 }
 
-export default connect(mapStateToProps, null)(Shifts);
+export default withRouter(connect(mapStateToProps, null)(Shifts));

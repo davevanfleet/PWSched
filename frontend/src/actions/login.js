@@ -1,5 +1,6 @@
 import { config } from '../constants';
 import { fetchCurrentCongregation } from './fetchCurrentCongregation';
+import { fetchShifts } from './fetchShifts';
 
 export function login(credentials, history) {
     return (dispatch) => {
@@ -22,6 +23,7 @@ export function login(credentials, history) {
                 const user = json.user
                 dispatch({type: 'ASSIGN_CURRENT_USER', user: user})
                 dispatch(fetchCurrentCongregation(user.congregation['$oid']))
+                dispatch(fetchShifts(user.congregation['$oid']))
                 history.push(`/`)
             })
             .catch(error => {

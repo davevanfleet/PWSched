@@ -8,6 +8,7 @@ import { BrowserRouter as Router,
 import Layout from './containers/Layout';
 import Home from './components/Home';
 import Shifts from './components/Shifts'
+import ShiftForm from './components/ShiftForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
@@ -22,6 +23,9 @@ function App(props) {
             </Route>
             <Route exact path="/shifts">
               {props.currentUser ? <Shifts /> : <Redirect to='/' />}
+            </Route>
+            <Route exact path="/create_shift">
+              {props.currentUser && props.currentUser.role === "admin" ? <ShiftForm /> : <Redirect to='/shifts' />}
             </Route>
             <Route exact path="/register">
               {!props.currentUser ? <RegisterForm /> : <Redirect to='/' />}
