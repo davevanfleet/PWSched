@@ -50,9 +50,10 @@ def create_shift(cong_id):
     body = request.get_json()
     shift = Shift(
         location=body["location"],
-        date=body["date"],
-        start_time=body["startTime"],
-        end_time=body["endTime"],
+        start_time=datetime.strptime(f'{body["date"]} {body["startTime"]}',
+                                     '%Y-%m-%d %H:%M'),
+        end_time=datetime.strptime(f'{body["date"]} {body["endTime"]}',
+                                   '%Y-%m-%d %H:%M'),
         congregation=congregation.to_dbref()
     )
     shift.save()
