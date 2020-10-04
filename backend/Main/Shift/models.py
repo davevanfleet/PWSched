@@ -18,7 +18,6 @@ class ShiftSchema(Schema):
     location = fields.Str()
     start_time = fields.DateTime()
     end_time = fields.DateTime()
-    congregation = fields.Str()
     volunteers = fields.List(
         fields.Str()
     )

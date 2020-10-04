@@ -3,7 +3,7 @@ import os
 from _datetime import datetime
 from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_user, logout_user
-from .models import User
+from .models import User, UserSchema
 from Main import crypt
 from Main.Congregation.models import Congregation
 from Main.utils import *
@@ -31,7 +31,8 @@ def register():
         jwt.encode({"email": user.email}, os.environ.get("SECRET_KEY"))
         .decode('utf-8')
     )
-    return (jsonify({"user": user}), 200,
+    user_json = UserSchema().dump(user)
+    return (jsonify({"user": user_json}), 200,
             {"Set-Cookie": f'auth={token}'})
 
 
@@ -49,7 +50,8 @@ def login():
         user.user_meta.timestamps.append(datetime.utcnow)
         user.save()
         token = user.get_auth_token()
-        res = make_response(jsonify({"user": user}), 200)
+        user_json = UserSchema().dump(user)
+        res = make_response(jsonify({"user": user_json}), 200)
         res.set_cookie('user-auth', value=token, path='/')
         return res
     else:
@@ -70,9 +72,10 @@ def get_current_user():
         token = request.cookies["user-auth"]
         email = jwt.decode(token, os.environ.get("SECRET_KEY"))['email']
         user = User.objects(email=email).first()
+        user_json = UserSchema().dump(user)
         if user:
             login_user(user)
-            return jsonify({"user": user}), 200
+            return jsonify({"user": user_json}), 200
         else:
             return jsonify({"message": "unable to find user"}), 401
     except Exception:
