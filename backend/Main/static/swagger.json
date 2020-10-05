@@ -13,9 +13,6 @@
             "User": {
                 "type": "object",
                 "properties": {
-                    "user_meta": {
-                        "type": "object"
-                    },
                     "name": {
                         "type": "string"
                     },
@@ -25,13 +22,16 @@
                     "confirmed": {
                         "type": "boolean"
                     },
+                    "role": {
+                        "type": "string"
+                    },
                     "congregation": {
                         "type": "object"
                     },
-                    "isActive": {
-                        "type": "boolean"
+                    "assigned_shifts": {
+                        "type": "array"
                     },
-                    "shifts": {
+                    "requested_shifts": {
                         "type": "array"
                     }
                 }
@@ -53,7 +53,10 @@
                     "location": {
                         "type": "string"
                     },
-                    "time": {
+                    "start_time": {
+                        "type": "string"
+                    },
+                    "end_time": {
                         "type": "string"
                     },
                     "volunteers": {
@@ -224,8 +227,13 @@
                                     "location": {
                                         "type": "string"
                                     },
-                                    "time": {
-                                        "type": "string"
+                                    "start_time": {
+                                        "type": "string",
+                                        "description": "in %Y-%m-%d %H:%M format"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "description": "in %Y-%m-%d %H:%M format"
                                     }
                                 }
                             }
@@ -266,6 +274,9 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "401": {
+                        "description": "Not Authorized"
                     }
                 }
             },
@@ -302,8 +313,13 @@
                                     "location": {
                                         "type": "string"
                                     },
-                                    "time": {
-                                        "type": "string"
+                                    "start_time": {
+                                        "type": "string",
+                                        "description": "in %Y-%m-%d %H:%M format"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "description": "in %Y-%m-%d %H:%M format"
                                     }
                                 }
                             }
