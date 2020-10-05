@@ -373,14 +373,18 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "username": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
                                         "type": "string"
                                     },
                                     "password": {
                                         "type": "string"
                                     },
                                     "congregation": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "name of congregation. Sent from select field, generated with data from GET /congregations"
                                     }
                                 }
                             }
@@ -405,7 +409,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "username": {
+                                    "email": {
                                         "type": "string"
                                     },
                                     "password": {
@@ -419,6 +423,9 @@
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "401": {
+                        "description": "Not Authorized"
                     }
                 }
             }  
