@@ -57,9 +57,9 @@ End-to-End testing for client-side app will be written soon and integrated into 
 
 ## Documentation
 
-Swagger docs can be found by installing and running the app, then navigating to `/api/docs`.  All endpoints should be documented.
-Or you can view the static swagger docs at `./static/json`
+Swagger docs for the backend can be found by installing and running the app, then navigating to `localhost:5000/api/docs`.  All endpoints should be documented.
+Or you can view the static swagger docs at `./backend/static/json`
 
 ## Contributing
 
-Contributions are always welcome.  Please check for any open issues when submitting PRs.  If you find a bug or have a feature request please submit it as a new issue. Please check for any open issues when submitting PRs.  If you find a bug or have a feature request please submit it as a new issue. Please also include tests an documentation as appropriate.
+Contributions are always welcome.  Please check for any open issues when submitting PRs. If you find a bug or have a feature request please submit it as a new issue. Please also include tests and documentation as appropriate.
