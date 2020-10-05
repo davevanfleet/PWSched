@@ -19,11 +19,11 @@ This app is currently in development, and is being refactored from a full-stack 
 
 ## Installing
 
-First, fork and Clone this repo.  
+First, Fork and Clone this repo.  
 Next, the easiest way to get up and running is with Docker
 
 - Make sure you have [Docker](https://www.docker.com/get-started) installed  
-- run `$ docker-compose up` in the project directory.  This creates a Docker image for both the frontend and the backend, and exposes the expected ports locally (5000 for the Flask backend, 3000 for the React frontend) for development.  `Dockerfile`s and `docker-composer.yaml` are written to still allow for hot reloading in both the frontend and backend in development environment.
+- run `$ docker-compose up` in the project directory.  This creates a Docker image for both the frontend and the backend, and exposes the expected ports locally (5000 for the Flask backend, 3000 for the React frontend) for development.  `Dockerfile`s and `docker-compose.yaml` are written to still allow for hot reloading in both the frontend and backend in development environment.
 
 If you prefer not to use Docker, you can still run the frontend and backend separately.
 
