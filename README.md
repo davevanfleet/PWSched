@@ -5,7 +5,7 @@ This app is being built to provide an easy means of scheduling public witnessing
 2. Volunteers request the shifts they would like
 3. Admin assigns shifts as appropriate and volunteers are notified via email.
 
-This app is currently in development, and is being refactored from a full-stack Ruby on Rails app (found at https://github.com/dvfleet413/PWSched) during the COVID-19 pandemic, while ther's no need for it in production!  The refactored app will be written with a much cleaner, more scalable, more performant codebase.
+This app is currently in development, and is being refactored from a full-stack Ruby on Rails app (found at https://github.com/dvfleet413/PWSched) during the COVID-19 pandemic, while there's no need for it in production!  The refactored app will be written with a much cleaner, more scalable, more performant codebase.
 
 ## Technologies Used
 
@@ -23,7 +23,7 @@ First, fork and Clone this repo.
 Next, the easiest way to get up and running is with Docker
 
 - Make sure you have [Docker](https://www.docker.com/get-started) installed  
-- run `$ docker-compose up` in the project directory.  This creates a Docker image form both the frontend and the backend, and exposes the expected ports locally (5000 for the Flask backend, 3000 for the React frontend)
+- run `$ docker-compose up` in the project directory.  This creates a Docker image for both the frontend and the backend, and exposes the expected ports locally (5000 for the Flask backend, 3000 for the React frontend) for development.  `Dockerfile`s and `docker-composer.yaml` are written to still allow for hot reloading in both the frontend and backend in development environment.
 
 If you prefer not to use Docker, you can still run the frontend and backend separately.
 
@@ -40,14 +40,20 @@ If you prefer not to use Docker, you can still run the frontend and backend sepa
     - `$ npm start` to run the project
   - You can now navigate to `localhost:3000` to see the frontend
 
+## CI/CD
+
+This app utilizes TravisCI for continuous integration. Test suite will be run on any PR's.  
+
 ## Tests
 
-Tests for the Flask backend can be found in `.backend//Tests`  
+Tests for the Flask backend can be found in `.backend/Tests`  
 Test suite is written with `pytest` and can be run using `$ pytest` in backend directory.
 
 To view test coverage:  
 - `$ coverage run -m pytest`
 - `$ coverage report`
+
+End-to-End testing for client-side app will be written soon and integrated into CI/CD pipeline.
 
 ## Documentation
 
