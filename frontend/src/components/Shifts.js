@@ -25,9 +25,12 @@ const Shifts = (props) => {
                 <td>{shift.volunteers[0]}</td>
                 <td>{shift.volunteers[1]}</td>
                 <td>
-                    <button className="btn btn-primary"
-                            value={shift.id}
-                            onClick={handleShiftRequest}>Here I am! Send Me!</button>
+                    {props.currentUser.requested_shifts.some(req => req.id === shift.id) ?
+                        "Already Requested" :
+                        <button className="btn btn-primary"
+                                value={shift.id}
+                                onClick={handleShiftRequest}>Here I am! Send Me!</button>
+                    }
                 </td>
             </tr>
         )
