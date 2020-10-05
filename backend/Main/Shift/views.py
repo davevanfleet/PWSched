@@ -25,8 +25,8 @@ def get_shift(cong_id, id):
 def update_shift(cong_id, id):
     congregation = set_congregation(cong_id)
     body = request.get_json()
+    Shift.objects().get(id=id).update(**body)
     shift = set_shift(id)
-    shift.update(**body)
     shift_json = ShiftSchema().dump(shift)
     return shift_json, 200
 
