@@ -42,7 +42,7 @@
                     "name": {
                         "type": "string"
                     },
-                    "volunteers": {
+                    "shifts": {
                         "type": "array"
                     }
                 }
@@ -70,7 +70,7 @@
         "/congregations": {
             "get": {
                 "summary": "Get all congregations",
-                "description": "Returns an array of all Congregation objects stored in db",
+                "description": "Returns an array of all congregation names. Primarily used to populate select option in registration form.",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -79,7 +79,7 @@
             },
             "post": {
                 "summary": "Create a new Congregation",
-                "description": "Uses data from request body to create a new Congregation.  Returns Congregation json on sucessful creation",
+                "description": "Uses data from request body to create a new Congregation.  Returns Congregation json on sucessful creation. Used only when user creates an admin account for a new congregation.",
                 "requestBody": {
                     "required": true,
                     "content": {
