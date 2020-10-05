@@ -25,7 +25,8 @@ class User(Document, UserMixin):
     password = StringField(min_length=8, required=True)
     congregation = ReferenceField("Congregation")
     isActive = BooleanField(default=True)
-    shifts = ListField(ReferenceField('Shift'), default=[])
+    requested_shifts = ListField(ReferenceField('Shift'), default=[])
+    assigned_shifts = ListField(ReferenceField('Shift'), default=[])
 
     def get_auth_token(self):
         s = Serializer(current_app.config['SECRET_KEY'])
@@ -50,6 +51,10 @@ class User(Document, UserMixin):
         return str(self.id)
 
 
+class UserShiftSchema(Schema):
+    id = fields.Str()
+
+
 class UserSchema(Schema):
     id = fields.Str()
     name = fields.Str()
@@ -57,6 +62,9 @@ class UserSchema(Schema):
     confirmed = fields.Boolean()
     role = fields.Str()
     congregation = fields.Nested(CongregationSchema)
-    shifts = fields.List(
-        fields.Str()
+    assigned_shifts = fields.List(
+        fields.Nested(UserShiftSchema)
+    )
+    requested_shifts = fields.List(
+        fields.Nested(UserShiftSchema)
     )

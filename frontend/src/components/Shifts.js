@@ -12,7 +12,7 @@ const Shifts = (props) => {
 
     const handleShiftRequest = (e) => {
         e.preventDefault()
-        props.requestShift(props.currentUser.id, e.target.value)
+        props.requestShift(props.currentUser.id, e.target.value, props.currentUser.congregation.id)
     }
 
     const shifts = props.shifts.map(shift => {

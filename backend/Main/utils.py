@@ -3,6 +3,7 @@ from flask_login import current_user
 from functools import wraps
 from Main.User.models import User
 from Main.Congregation.models import Congregation
+from Main.Shift.models import Shift
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
@@ -14,6 +15,11 @@ def set_user(id):
 def set_congregation(id):
     congregation = Congregation.objects().get(id=id)
     return congregation
+
+
+def set_shift(id):
+    shift = Shift.objects().get(id=id)
+    return shift
 
 
 def decode_auth_token(token):
