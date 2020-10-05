@@ -5,6 +5,11 @@ export function userReducer(state=null, action){
             return {
                 ...action.user,
             }
+        case 'REQUEST_SHIFT':
+            return {
+                ...state,
+                requested_shifts: [...state.requested_shifts, {id: action.shiftId}]
+            }
         case 'LOGOUT':
             return null
         default:

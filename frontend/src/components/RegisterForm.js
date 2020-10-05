@@ -35,7 +35,7 @@ const RegisterForm = (props) => {
         props.register(credentials)
     }
 
-    const congregationOptions = props.congregations.map(cong => <option value={`${cong.name}`}>{cong.name}</option>)
+    const congregationOptions = props.congregations.map(cong => <option value={`${cong}`}>{cong}</option>)
 
     return (
         <>

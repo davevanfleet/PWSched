@@ -1,6 +1,4 @@
 import { config } from '../constants';
-import { fetchCurrentCongregation } from './fetchCurrentCongregation';
-import { fetchShifts } from './fetchShifts';
 
 export function getCurrentUser() {
     return (dispatch) => {
@@ -22,8 +20,6 @@ export function getCurrentUser() {
             .then(json => {
                 const user = json.user
                 dispatch({type: 'ASSIGN_CURRENT_USER', user: user})
-                dispatch(fetchCurrentCongregation(json.user.congregation.$oid))
-                dispatch(fetchShifts(json.user.congregation.$oid))
             })
     };
 }

@@ -65,6 +65,20 @@ def test_put_shift(client):
     assert data["location"] == "Dam trail"
 
 
+def test_request_shift(client):
+    congregation = Congregation.objects().first()
+    cong_id = str(congregation.id)
+    shift = Shift.objects().first()
+    shift_id = str(shift.id)
+    user = User.objects().first()
+    user_id = str(user.id)
+    response = client.put(f'/congregations/{cong_id}/shifts/{shift_id}'
+                          '/request', json={"userId": user_id})
+    assert response.status_code == 200
+    data = response.get_json()
+    assert len(data["requested_by"]) == 1
+
+
 def test_delete_shift(client):
     congregation = Congregation.objects().first()
     cong_id = str(congregation.id)

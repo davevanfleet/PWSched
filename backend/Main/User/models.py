@@ -6,7 +6,9 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from mongoengine import IntField, ListField, BooleanField, DateTimeField, \
     EmbeddedDocument, EmbeddedDocumentField, DictField, EmailField, \
     EmbeddedDocumentListField, StringField, ReferenceField
+from marshmallow import fields, Schema
 from Main import login_manager
+from Main.Congregation.models import CongregationSchema
 
 
 class Meta(EmbeddedDocument):
@@ -21,9 +23,10 @@ class User(Document, UserMixin):
     role = StringField(default="volunteer")
     confirmed = BooleanField(default=False)
     password = StringField(min_length=8, required=True)
-    congregation = ReferenceField('Congregation', required=True)
+    congregation = ReferenceField("Congregation")
     isActive = BooleanField(default=True)
-    shifts = ListField(ReferenceField('Shift'), default=[])
+    requested_shifts = ListField(ReferenceField('Shift'), default=[])
+    assigned_shifts = ListField(ReferenceField('Shift'), default=[])
 
     def get_auth_token(self):
         s = Serializer(current_app.config['SECRET_KEY'])
@@ -46,3 +49,22 @@ class User(Document, UserMixin):
 
     def get_id(self):
         return str(self.id)
+
+
+class UserShiftSchema(Schema):
+    id = fields.Str()
+
+
+class UserSchema(Schema):
+    id = fields.Str()
+    name = fields.Str()
+    email = fields.Email()
+    confirmed = fields.Boolean()
+    role = fields.Str()
+    congregation = fields.Nested(CongregationSchema)
+    assigned_shifts = fields.List(
+        fields.Nested(UserShiftSchema)
+    )
+    requested_shifts = fields.List(
+        fields.Nested(UserShiftSchema)
+    )

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from .models import Congregation
+from .models import Congregation, CongregationSchema
 from IPython import embed
 
 congregations = Blueprint('congregations', __name__)
@@ -8,7 +8,8 @@ congregations = Blueprint('congregations', __name__)
 @congregations.route('/<id>', methods=['GET'])
 def get_congregation(id):
     congregation = Congregation.objects().get(id=id)
-    return jsonify(congregation), 200
+    congregation_json = CongregationSchema().dump(congregation)
+    return congregation_json, 200
 
 
 @congregations.route('/<id>', methods=['PUT'])
@@ -16,7 +17,8 @@ def update_congregation(id):
     body = request.get_json()
     Congregation.objects().get(id=id).update(**body)
     congregation = Congregation.objects().get(id=id)
-    return jsonify(congregation), 200
+    congregation_json = CongregationSchema().dump(congregation)
+    return congregation_json, 200
 
 
 @congregations.route('/<id>', methods=['DELETE'])
@@ -27,7 +29,7 @@ def delete_congregation(id):
 
 @congregations.route('/', methods=['GET'])
 def get_congregations():
-    congregations = Congregation.objects()
+    congregations = list(map(lambda cong: cong.name, Congregation.objects()))
     return jsonify(congregations), 200
 
 
@@ -35,4 +37,5 @@ def get_congregations():
 def create_congregation():
     body = request.get_json()
     congregation = Congregation(name=body['name']).save()
-    return jsonify(congregation), 200
+    congregation_json = CongregationSchema().dump(congregation)
+    return congregation_json, 200
