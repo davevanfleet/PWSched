@@ -13,14 +13,18 @@ class Shift(Document):
     requested_by = ListField(ReferenceField("User"), default=[])
 
 
+class UserShiftSchema(Schema):
+    id = fields.Str()
+
+
 class ShiftSchema(Schema):
     id = fields.Str()
     location = fields.Str()
     start_time = fields.DateTime()
     end_time = fields.DateTime()
     volunteers = fields.List(
-        fields.Str()
+        fields.Nested(UserShiftSchema)
     )
     requested_by = fields.List(
-        fields.Str()
+        fields.Nested(UserShiftSchema)
     )

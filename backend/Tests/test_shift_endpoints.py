@@ -72,8 +72,8 @@ def test_request_shift(client):
     shift_id = str(shift.id)
     user = User.objects().first()
     user_id = str(user.id)
-    response = client.put(f'/congregations/{cong_id}/shifts/{shift_id}/request',
-                          json={"userId": user_id})
+    response = client.put(f'/congregations/{cong_id}/shifts/{shift_id}'
+                          '/request', json={"userId": user_id})
     assert response.status_code == 200
     data = response.get_json()
     assert len(data["requested_by"]) == 1
