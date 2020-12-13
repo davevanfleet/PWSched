@@ -1,0 +1,37 @@
+- hosts: localhost
+  connection: local
+  become: true
+  vars:
+  - interface: lxcbr0
+
+  tasks:
+  - name: apt lxc packages are installed on host
+    apt: name={{ item }}
+    with_items:
+    - lxc
+    - lxc-dev
+    - python3-pip
+
+  - copy:
+      dest: /etc/default/lxc-net
+      content: |
+        USE_LXC_BRIDGE="true"
+
+  - copy:
+      dest: /etc/lxc/default.conf
+      content: |
+        lxc.net.0.type = veth
+        lxc.net.0.link = {{ interface }}
+        lxc.net.0.flags = up
+        lxc.net.0.hwaddr = 00:16:3e:xx:xx:xx
+
+  - service:
+      name: lxc-net
+      state: started
+
+  - name: pip lxc packages are installed on host
+    pip:
+      name: "{{ item }}"
+    with_items:
+    - python3-lxc
+    run_once: true
