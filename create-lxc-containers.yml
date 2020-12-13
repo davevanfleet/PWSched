@@ -1,0 +1,96 @@
+- hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Destroy container if exists
+    delegate_to: localhost
+    lxc_container:
+      name: "{{ inventory_hostname }}"
+      state: absent
+    when: preserve is undefined
+
+  - set_fact: distro="alpine"
+    when: distro is undefined
+  
+  - name: Create LXC container (default to Alpine 3.11)
+    delegate_to: localhost
+    lxc_container:
+      name: "{{ inventory_hostname }}"
+      template: download
+      state: started
+      container_log: true
+      template_options: --dist={{ distro | default('alpine') }} --release={{ distro_version | default('3.11') }} --arch=amd64
+      container_config:
+        - lxc.cgroup.memory.limit_in_bytes = 1024M
+        # Uncomment for final, but doesn't play well with wireless systems
+        # - lxc.net.0.type = macvlan
+        # - lxc.net.0.macvlan.mode = bridge
+        # - lxc.net.0.flags = up
+        # - lxc.net.0.link = eth0
+        # - lxc.cgroup.cpu.shares = 512
+
+  # Probably not needed, but just to be safe
+  - name: Wait until container is running
+    delegate_to: localhost
+    command: "lxc-wait -n {{ inventory_hostname }} -s 'RUNNING' -t 10"
+
+  - name: Make sure networking is started before APK update
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- rc-service networking restart"
+    when: distro == "alpine"
+
+  - name: Make sure networking is started before apt-get update
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- service networking restart"
+    when: distro == "debian"
+
+  - name: Update APK (Alpine)
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- apk update"
+    when: distro == "alpine"
+    register: updateapk_result
+    until: updateapk_result.rc == 0
+    retries: 5
+    delay: 5
+
+  - name: Update apt-get (Debian)
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- apt-get update"
+    when: distro == "debian"
+    register: updatedebian_result
+    until: updatedebian_result.rc == 0
+    retries: 5
+    delay: 5
+
+  # Can't use container_command to install python since it insists on using bash
+  - name: Install Python (Alpine)
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- apk add --no-cache python3"
+    when: distro == "alpine"
+    register: installpythonalpine_result
+    until: installpythonalpine_result.rc == 0
+    retries: 5
+    delay: 5
+
+  - name: Install Python (Debian)
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- apt-get install python3 -y"
+    when: distro == "debian"
+    register: installpythondebian_result
+    until: installpythondebian_result.rc == 0
+    retries: 5
+    delay: 5
+
+  - name: Enable Python3
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- sh -c 'if [ ! -e /usr/bin/python ]; then ln -s /usr/bin/python3 /usr/bin/python; fi'"
+
+  - name: Update Pip3
+    delegate_to: localhost
+    command: "lxc-attach -n {{ inventory_hostname }} -- pip3 install --upgrade pip"
+    when: distro == "alpine"
+    register: updatepip_result
+    until: updatepip_result.rc == 0
+    retries: 5
+    delay: 5

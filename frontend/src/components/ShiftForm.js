@@ -68,7 +68,7 @@ const ShiftForm = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        congId: state.currentCongregation._id.$oid
+        congid: state.currentUser.congregation.id
     }
 }
 
